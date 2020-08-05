@@ -32,7 +32,7 @@ public class MovieCatalogResource {
         // This do the same of above committed code but above object (restTemplate) will be deprecated
         UserRating ratings = webClientBuilder.build()
                 .get()
-                .uri("http://ratings-data-service/ratingsdata/users/" + userId)
+                .uri("http://ratings-data-service/ratingsdata/users/" + userId) // 'ratings-data-service' is the name of service on Eureka, check it on application.properties
                 .retrieve()
                 .bodyToMono(UserRating.class)
                 .block();
