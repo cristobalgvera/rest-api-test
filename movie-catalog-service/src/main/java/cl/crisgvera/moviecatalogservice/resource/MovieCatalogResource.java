@@ -27,12 +27,12 @@ public class MovieCatalogResource {
     public UserCatalogItem getCatalog(@PathVariable("id") String userId) {
 
         // Get all rated movies IDs
-//        UserRating ratings = restTemplate.getForObject("http://localhost:8083/ratingsdata/users/" + userId, UserRating.class);
+//        UserRating ratings = restTemplate.getForObject("http://ratings-data-service/ratingsdata/users/" + userId, UserRating.class);
 
         // This do the same of above committed code but above object (restTemplate) will be deprecated
         UserRating ratings = webClientBuilder.build()
                 .get()
-                .uri("http://localhost:8083/ratingsdata/users/" + userId)
+                .uri("http://ratings-data-service/ratingsdata/users/" + userId)
                 .retrieve()
                 .bodyToMono(UserRating.class)
                 .block();
@@ -41,13 +41,13 @@ public class MovieCatalogResource {
             // For each movie ID, call movie info service and get details
             // .getForObject() method populate an object with rest response of url site
             // Object to populate must have an empty constructor else will throw an error
-//            Movie movie = restTemplate.getForObject("http://localhost:8081/movies/" + rating.getMovieId(), Movie.class);
+//            Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
 
 
             // This do the same of above committed code but above object (restTemplate) will be deprecated
             Movie movie = webClientBuilder.build()
                     .get() // Request type. Can be post, put, delete, and so on
-                    .uri("http://localhost:8081/movies/" + rating.getMovieId()) // URI where get the consume
+                    .uri("http://movie-info-service/movies/" + rating.getMovieId()) // URI where get the consume
                     .retrieve() // Kind a fetch
                     .bodyToMono(Movie.class) // It's a promise for when consume is available to populate the class
                     .block(); // .block() "stop" method execution and resume it when Movie class instance are populate
